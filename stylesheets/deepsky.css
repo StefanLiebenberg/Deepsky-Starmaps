@@ -1,0 +1,39 @@
+div.overlay {
+  overflow: hidden
+}
+
+div.overlay .ui-slider {
+  margin: 10px;
+}
+
+div.starmap {
+  overflow: hidden
+}
+
+div.starmap .hotzone {
+  position: relative;
+  background: blue;
+  opacity: 0.2; filter( alpha=20 );
+  border: 1px solid white;
+}
+
+div.starmap .hotzone.hovering {
+  opacity: 0.5;
+}
+
+div.starmap .hovering-text {
+  overflow: visible;
+  position: relative;
+  opacity: 1;filter( alpha=100 );
+  z-index: 100;
+  border: 1px solid silver;
+  background: black;
+  color: white;
+  width: 100px;
+  padding: 2px;
+}
+
+div.starmap .hovering-text.hidden {
+  opacity: 0;filter( alpha=0 );
+  z-index: -100;
+}
