@@ -1,8 +1,8 @@
 /*
- * Deepsky Starmaps by Stefan Liebenberg  is licensed 
+ * Deepsky Starmaps by Stefan Liebenberg [stefan(at)artspace44(dot)com] is licensed 
  * under a Creative Commons Attribution-Noncommercial 2.5 South Africa License.
  * View the licence at http://creativecommons.org/licenses/by-nc/2.5/za/
- * Based on a work at http://stefan.artspace44.com/deepsky,
+ * Based on a work at http://stefan.artspace44.com/deepsky
  * Source files available at http://github.com/StefanLiebenberg/Deepsky-Starmaps
  */
 
