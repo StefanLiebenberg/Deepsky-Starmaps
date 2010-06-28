@@ -1,3 +1,4 @@
+
 /*
  * Deepsky Starmaps by Stefan Liebenberg [stefan(at)artspace44(dot)com] is licensed 
  * under a Creative Commons Attribution-Noncommercial 2.5 South Africa License.
@@ -5,6 +6,15 @@
  * Based on a work at http://stefan.artspace44.com/deepsky
  * Source files available at http://github.com/StefanLiebenberg/Deepsky-Starmaps
  */
+/*
+$.fn.hotzone = function ( coords, options ) {
+  *
+   * measure width and height
+   * position on over image
+   *
+}; */
+
+('img').hotzone( 'x,y,t,l', { href: '/x.html' } )
 
 $.fn.overlay = function (options) {
   return $(this).each(function(){
@@ -19,7 +29,7 @@ $.fn.overlay = function (options) {
     image.replaceWith( container );
  
     container
-      .mousedown(function(){return false})
+      .mousedown(function(){return false}) // disables the dragging effect
       .addClass( 'overlay' )
       .append( $( document.createElement( 'div' ) )
         .append( image )
