@@ -1,27 +1,27 @@
 div.overlay {
-  overflow: hidden
+  overflow: hidden;
 }
 
 div.overlay .ui-slider {
-  margin: 10px;
+  margin: 12px;
 }
 
-div.starmap {
+div.zoned {
   overflow: hidden
 }
 
-div.starmap .hotzone {
+div.zoned .zone {
   position: relative;
   background: blue;
   opacity: 0.2; filter( alpha=20 );
   border: 1px solid white;
 }
 
-div.starmap .hotzone.hovering {
+div.zoned .zone.hovering {
   opacity: 0.5;
 }
 
-div.starmap .hovering-text {
+div.zoned .hovering-text {
   overflow: visible;
   position: relative;
   opacity: 1;filter( alpha=100 );
@@ -33,7 +33,23 @@ div.starmap .hovering-text {
   padding: 2px;
 }
 
-div.starmap .hovering-text.hidden {
+div.zoned .hovering-text.hidden {
   opacity: 0;filter( alpha=0 );
   z-index: -100;
+}
+
+
+div.flag {
+  position: relative;
+  z-index: 100;
+  border: 0px solid silver;
+  background: darkblue;
+  color: white;
+  padding: 2px;
+  width: 150px;
+  padding: 0px; margin: 0px;
+}
+
+div.flag.hidden {
+  visibility: hidden;
 }
