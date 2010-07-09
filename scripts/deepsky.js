@@ -7,7 +7,7 @@
  */
 
 top.positionMachine = (function(){
-  return function positionMachine( element, target, placement ) {
+  return function (element,target,placement){
     var elPos=element.position(),tgPos=target.position(),l,t
     if(placement.match(/^outside\s+(center\s+)?left$/))
       l = ( elPos.left - tgPos.left ) - element.width();
@@ -30,7 +30,7 @@ top.positionMachine = (function(){
     else if(placement.match(/^outside\s+bottom(\s+(left|center|right))?$/))
       t =  -( elPos.top - tgPos.top ) + target.height();
     return {left:l||0,top:t||0};    
-}
+ }
 })();
  
 
