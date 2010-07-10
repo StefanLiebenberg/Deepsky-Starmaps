@@ -88,10 +88,7 @@ $.fn.overlay = function (options) {
         .slider({
           animate: true,
           step: 0.5,
-          slide: function (event,ui) {  /* LEAK 02 leaks: options, image, overlay, container, settings */
-            overlay.css('opacity', ui.value/100 )
-            // image.css('opacity', 1 - (ui.value/100))
-          }  
+          slide: $.fn.overlay.slideFunc(overlay)
         })
         
       )
@@ -100,6 +97,8 @@ $.fn.overlay = function (options) {
       })
   })
 }
+
+$.fn.overlay.slideFunc=function(overlay){return function(evnt,ui){void overlay.css('opacity',ui.value/100)}};
 
 $.fn.starmap = function () {
   return $(this).each(function() {
@@ -121,8 +120,7 @@ $.fn.starmap = function () {
       .append( image )
       .mousedown($.fnFalse);
 
-    function hotzone( area, coords, options ){  /* LEAK 04 leaks: image,container,map,settings */
-      
+    function hotzone( area, coords, options ){  /* POTENTIAL LEAK 04 leaks: image,container,map,settings */
       var zone = $( document.createElement( 'div' ) )
           .addClass( 'hotzone' )
           .attr( 'style', $(area).attr( 'style' ) || '' )
@@ -165,10 +163,10 @@ $.fn.starmap = function () {
         left: Math.max( Math.min(l,settings.width-o), 0 )
       })
       
-      var on = function(){   /* LEAK 05 leaks: image,container,map,settings, area, coords, options, zone, p, q, alt, x, o, l */
+      var on = function(){   /* LEAK 05 leaks: hotzone, image,container,map,settings, area, coords, options, zone, p, q, alt, x, o, l */
         $(this).addClass('hovering')
         alt.removeClass( 'hidden' )          
-      }, of = function(){    /* LEAK 06 leaks: image,container,map,settings, area, coords, options, zone, p, q, alt, x, o, l */
+      }, of = function(){    /* LEAK 06 leaks: hotzone, image,container,map,settings, area, coords, options, zone, p, q, alt, x, o, l */
         $(this).removeClass('hovering')
         alt.addClass( 'hidden' )
       };
