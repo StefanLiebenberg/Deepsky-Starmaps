@@ -6,10 +6,13 @@
  * Source files available at http://github.com/StefanLiebenberg/Deepsky-Starmaps
  */
 
-function positionMachine( element, target, top, left ){
-  element = $( element ).position(); target = $( target ).position();
-  return {left:element.left-target.left+left,top:top-element.top+target.top}
-};
+$.fn.positionTo = function ( target, top, left ) {
+  var pos = $( this ).position(), tar = $( target ).position();
+  return $(this).css({
+    left:pos.left-tar.left+parseInt(left),
+    top:parseInt(top)-pos.top+tar.top
+  })
+}
 
 $.fn.flag = function ( text, options ) {
   
@@ -31,7 +34,7 @@ $.fn.flag = function ( text, options ) {
       .append( flag );
         
     // align flag to target
-    flag.css(positionMachine(flag,target,settings.top,settings.left)); 
+    flag.positionTo(target,settings.top,settings.left); 
         
     // removed on and off functions from scope to fix memory leaks
     var on = $.fn.flag.fn_on(flag), off = $.fn.flag.fn_off(flag);
