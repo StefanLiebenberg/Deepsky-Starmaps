@@ -66,7 +66,7 @@ $.fn.overlay = function (options) {
     image.replaceWith( container );
  
     container
-      .mousedown(function(){return false}) // disables the dragging effect /* LEAK 01 leaks: options, image, overlay, container, settings */
+      .mousedown($.fnFalse) // disables the dragging effect
       .addClass( 'overlay' )
       .append( $( document.createElement( 'div' ) )
         .append( image )
@@ -90,7 +90,6 @@ $.fn.overlay = function (options) {
           step: 0.5,
           slide: $.fn.overlay.slideFunc(overlay)
         })
-        
       )
       .css({
         width: settings.width
@@ -120,6 +119,8 @@ $.fn.starmap = function () {
       .append( image )
       .mousedown($.fnFalse);
 
+
+    // this leak will be fixed when flag is implemented
     function hotzone( area, coords, options ){  /* POTENTIAL LEAK 04 leaks: image,container,map,settings */
       var zone = $( document.createElement( 'div' ) )
           .addClass( 'hotzone' )
@@ -163,6 +164,7 @@ $.fn.starmap = function () {
         left: Math.max( Math.min(l,settings.width-o), 0 )
       })
       
+      // These leaks will be removed with implementation of flag
       var on = function(){   /* LEAK 05 leaks: hotzone, image,container,map,settings, area, coords, options, zone, p, q, alt, x, o, l */
         $(this).addClass('hovering')
         alt.removeClass( 'hidden' )          
@@ -185,4 +187,11 @@ $.fn.starmap = function () {
     
     map.remove()
   })
-}
+};
+
+
+// Implemetation Happens in Script, way cooler idea!
+$(window).bind('load',function(){
+  // do stuff here
+})
+
