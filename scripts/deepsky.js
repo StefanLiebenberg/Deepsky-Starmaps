@@ -6,178 +6,46 @@
  * Source files available at http://github.com/StefanLiebenberg/Deepsky-Starmaps
  */
 
-top.positionMachine = (function(){
-  return function (element,target,placement){
-    var elPos=element.position(),tgPos=target.position(),l,t
-    if(placement.match(/^outside\s+(center\s+)?left$/))
-      l = ( elPos.left - tgPos.left ) - element.width();
-    else if (placement.match(/^((out|in)side\s)?(top|bottom)\s+left$/)||placement.match(/^(inside\s+)?(center\s+)?left$/))
-      l = elPos.left - tgPos.left;
-    else if ( placement.match(/^((in|out)side\s+)?(top|center|bottom)(\s+center)?$/) ) 
-      l = ( elPos.left - tgPos.left ) + ( target.width() / 2 ) - ( element.width() / 2 );
-    else if ( placement.match(/^((in|out)side\s+)?((top|bottom)\s+)?right$/)||placement.match(/(inside\s+)(center\s+)?right/))
-      l = ( elPos.left - tgPos.left ) + target.width() - element.width();
-    else if ( placement.match(/^(outside)\s+(center\s+)?right/))
-      l = ( elPos.left - tgPos.left ) + target.width();
-    if(placement.match(/^outside\s+top(\s+(left|center|right))?$/))
-      t =  - ( elPos.top - tgPos.top ) - element.height() ;
-    else if(placement.match(/^(inside\s+)?top(\s+(left|center|right))?$/))
-      t =  - ( elPos.top - tgPos.top ) ;
-    else if(placement.match(/^((in|out)side\s+)?center(\s+(left|center|right))?$/))
-      t = -(elPos.top - tgPos.top ) + (target.height() / 2 ) - (element.height() / 2 );
-    else if(placement.match(/^(inside\s+)?bottom(\s+(left|center|right))?$/))
-      t =  -(elPos.top - tgPos.top ) + target.height() - element.height() ;
-    else if(placement.match(/^outside\s+bottom(\s+(left|center|right))?$/))
-      t =  -( elPos.top - tgPos.top ) + target.height();
-    return {left:l||0,top:t||0};    
- }
-})();
- 
+function positionMachine( element, target, top, left ){
+  element = $( element ).position(); target = $( target ).position();
+  return {left:element.left-target.left+left,top:top-element.top+target.top}
+};
 
 $.fn.flag = function ( text, options ) {
   
+  // setup defaults
   var settings = $.extend({
-    left: 0, top: 0,
-    placement: 'inside center center' // or 'outside' { inside outside } { left, right, middel } { top bottom middle }
+    left: 0, top: 0
   }, options || {} )
-
   
-  settings.placement = settings.placement.replace(/(^\s*)|(\s*$)/g, '' ); // strip white spaces
-  
-  if( settings.placement == "" )
-    settings.placement = 'center';
-
-  if( settings.placement.match( /^(left|center|right)$/ ) )
-    settings.placement = 'center ' + settings.placement;
-
-  if( settings.placement.match( /^(top|bottom|center)(\s)+(left|center|right)$/ ) )
-    settings.placement = 'inside ' + settings.placement;
-
-
-  if(! settings.placement.match( /^(in|out)side\s+(top|bottom|center)\s+(left|center|right)$/ ) )
-   settings.placement = 'inside center center';
-  
-  
+  // run for every element;
   return $(this).each(function(){
-    var target = $(this), pos = target.position();
-    
-    var flag = $(document.createElement( 'div' ))
+    // initialize target and flag elements;
+    var target = $(this), flag = $(document.createElement( 'div' ))
         .addClass( 'flag' )
         .addClass( 'hidden' )
-        .html( text )
+        .html( text );
     
-    $( document.body ).append( flag );
+    // add flag to DOM
+    $( settings.parent||document.body )
+      .append( flag );
         
-   flag.css( positionMachine( flag, target, settings.placement ) );
-    
-    
-    
-//    var left, top;
-     /* A - OUTSIDE
-     * 
-     * > outside [center] left 
-     * 
-     * alt.left = left - alt.width;
-     */
-  //  if( settings.placement.match(/^(outside)\s+(center)?\s+(left)$/) )
-   //   left = pos.left - flag.width();
-      
-    
-    /* A - INSIDE 
-     * 
-     * > [outside|inside] top|bottom left
-     * > [inside] left
-     * 
-     * alt.left = left
-     */
-    // else if ( settings.placement.match(/^(outside|inside)?\s+(top|bottom)\s+left$/) || settings.placement.match(/^(outside|inside)?\s+(top|bottom)\s+left$/) || 
-      
-    
-    
-    
-    
-    
-    
-   
-    
-    
-    
-     
-     /* B 
-      * 
-      * > [inside|outside] [center] top|center|bottom
-      * 
-      * alt.left = left + ( width / 2) - ( alt.width / 2 )
-      */
-    
-    
-    /* C - INSIDE 
-     * 
-     * > [outside|inside] top|bottom right
-     * > [inside] right
-     * 
-     * alt.left = left + width - alt.width
-     */
-       
-    /* C - OUTSIDE
-     * 
-     * > outside [center] right 
-     * 
-     * alt.left = left - alt.width;
-     */
-    
-     
-    
-    
-      
-    
-    
-    /*
-     * INSIDE:
-     * 
-     * A1 < top, left >
-     * A2 < top, left + ( width / 2 ) - ( alt.width / 2 ) >
-     * A3 < top, left + width - ( alt.width ) >
-     * 
-     * B1 < top + ( height / 2 ) - ( alt.height / 2 ), left >
-     * B2 < top + ( height / 2 ), left + ( width / 2 ) - ( alt.width / 2 ) >
-     * B3 < 
-     */
-    
-    
-    /*
-    if ( settings.placement == 'inside' ) {
-      flag.css({
-        left: pos.left + settings.left,
-        top: pos.top + settings.top
-      })
-    }
-    
-    if( settings.placement == 'outside' ) {
-      flag.css({
-        left: pos.left + target.width(),
-        top: pos.top
-      })
-    }
-    */
-    
-    
-    function on (){
-      flag.removeClass( 'hidden' )          
-    }
-    
-    function of () {
-      flag.addClass( 'hidden' )
-    };
+    // align flag to target
+    flag.css(positionMachine(flag,target,settings.top,settings.left)); 
+        
+    // removed on and off functions from scope to fix memory leaks
+    var on = $.fn.flag.fn_on(flag), off = $.fn.flag.fn_off(flag);
   
+    // specify on/off behaviour
     target
       .mousemove(on)
       .mouseover(on)
-      .mouseout(of)
-        
+      .mouseout(off);
   })  
-}
+};
 
+$.fn.flag.fn_on=function(flag){return function(){flag.removeClass('hidden')}};
+$.fn.flag.fn_off=function(flag){return function(){flag.addClass('hidden')}};
 
 $.fn.overlay = function (options) {
   return $(this).each(function(){
