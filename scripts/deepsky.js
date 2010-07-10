@@ -192,6 +192,6 @@ $.fn.starmap = function () {
 
 // Implemetation Happens in Script, way cooler idea!
 $(window).bind('load',function(){
-  // do stuff here
+  $('img[rel=overlay]').overlay()
 })
 
