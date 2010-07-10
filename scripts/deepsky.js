@@ -6,13 +6,16 @@
  * Source files available at http://github.com/StefanLiebenberg/Deepsky-Starmaps
  */
 
+$.fnFalse=function(){return false};
+$.fnTrue=function(){return !$.fnFalse()};
+
 $.fn.positionTo = function ( target, top, left ) {
   var pos = $( this ).position(), tar = $( target ).position();
   return $(this).css({
     left:pos.left-tar.left+parseInt(left),
     top:parseInt(top)-pos.top+tar.top
   })
-}
+};
 
 $.fn.flag = function ( text, options ) {
   
@@ -44,7 +47,7 @@ $.fn.flag = function ( text, options ) {
       .mousemove(on)
       .mouseover(on)
       .mouseout(off);
-  })  
+  })
 };
 
 $.fn.flag.fn_on=function(flag){return function(){flag.removeClass('hidden')}};
@@ -116,7 +119,7 @@ $.fn.starmap = function () {
         height: settings.height
       })
       .append( image )
-      .mousedown(function(){return false}); /* LEAK 03 leaks: image,container,map,settings */
+      .mousedown($.fnFalse);
 
     function hotzone( area, coords, options ){  /* LEAK 04 leaks: image,container,map,settings */
       
