@@ -107,11 +107,11 @@ $.fn.starmap = function () {
         settings = {
           width: image.attr( 'width' ),
           height: image.attr( 'height' )
-        }
+        };
           
     image.replaceWith( container );
     container
-      .addClass( 'starmap' )
+      .addClass( 'zoned' )
       .css({
         width: settings.width,
         height: settings.height
@@ -123,19 +123,15 @@ $.fn.starmap = function () {
     // this leak will be fixed when flag is implemented
     function hotzone( area, coords, options ){  /* POTENTIAL LEAK 04 leaks: image,container,map,settings */
       var zone = $( document.createElement( 'div' ) )
-          .addClass( 'hotzone' )
-          .attr( 'style', $(area).attr( 'style' ) || '' )
+          .addClass( 'zone' )
+          .attr( 'style', $(area).attr( 'style' ) || '' ) // take style from area;
           .css({
             height: coords[3] - coords[1],
             width: coords[2] - coords[0]
           })
           
-      if( image.attr( 'overlay' ) ) {
-        zone.css({
-          background: x = "url(" + image.attr( 'overlay' ) + ") -" + coords[0] + 'px -' + (coords[1]+2) + 'px',
-          border: '0px'
-        })
-      }
+      if( image.attr( 'overlay' ) )
+        zone.css( 'background', "url(" + image.attr( 'overlay' ) + ") -" + coords[0] + 'px -' + (coords[1]+2) + 'px' );
           
       container
         .append( zone );
@@ -147,7 +143,7 @@ $.fn.starmap = function () {
         top: -(q.top - p.top) + coords[1],
         left: -(q.left - p.left) + coords[0]
       })
-      
+    
       var alt = $(document.createElement( 'div' ))
           .html( area.attr('alt') )
           .addClass('hovering-text')
@@ -185,7 +181,8 @@ $.fn.starmap = function () {
       hotzone($(this), eval('['+$( this ).attr( 'coords' )+']'))
     })
     
-    map.remove()
+    image.attr( 'usemap', '' )
+    
   })
 };
 
@@ -193,5 +190,6 @@ $.fn.starmap = function () {
 // Implemetation Happens in Script, way cooler idea!
 $(window).bind('load',function(){
   $('img[rel=overlay]').overlay()
+  $('img[rel=hotzones]').starmap()
 })
 

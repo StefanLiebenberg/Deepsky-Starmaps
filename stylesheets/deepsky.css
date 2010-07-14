@@ -1,3 +1,7 @@
+div.overlay img, div.zoned img {
+  border: none;
+}
+
 div.overlay {
   overflow: hidden;
 }
